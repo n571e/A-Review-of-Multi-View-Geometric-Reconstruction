@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{ctexart}
+\documentclass[12pt,a4paper,fleqn]{ctexart}
 
 \usepackage{geometry}
 \geometry{left=2.7cm,right=2.7cm,top=2.54cm,bottom=2.54cm}
@@ -8,6 +8,7 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
+\usepackage{chngcntr}
 \usepackage{amsmath,amssymb}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -17,25 +18,88 @@
 \usepackage[backend=biber,style=gb7714-2015,sorting=none]{biblatex}
 
 \addbibresource{refs/review.bib}
+\setmainfont{Times New Roman}
+\newfontfamily\TimesNewRoman{Times New Roman}
+\newCJKfontfamily\HeiTiBold{SimHei}[AutoFakeBold=2.5]
+\newCJKfontfamily\SongTiBold{SimSun}[AutoFakeBold=2.5]
+\renewcommand{\contentsname}{目\hspace{2em}录}
+\let\cite\supercite
+
+\setlength{\mathindent}{2em}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\numberwithin{equation}{section}
+\renewcommand{\thefigure}{\arabic{section}-\arabic{figure}}
+\renewcommand{\thetable}{\arabic{section}-\arabic{table}}
+\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+\setlength{\heavyrulewidth}{1.5pt}
+\setlength{\lightrulewidth}{0.5pt}
+\setlength{\cmidrulewidth}{0.5pt}
+\setlength{\bibhang}{2em}
+\setlength{\bibitemsep}{0pt}
+\DeclareCaptionLabelSeparator{twospace}{\hspace{2em}}
+\DeclareCaptionFont{songtibold}{\SongTiBold\zihao{5}}
+\captionsetup{
+  justification=centering,
+  singlelinecheck=false,
+  labelsep=twospace,
+  font={stretch=1.25},
+  skip=6pt
+}
+\renewcommand*{\bibfont}{\songti\TimesNewRoman\zihao{5}\setstretch{1.25}}
+\newcommand{\CaptionSource}[1]{%
+  \if\relax\detokenize{#1}\relax
+  \else
+    \textsuperscript{\songti\zihao{6}[#1]}%
+  \fi
+}
+\newcommand{\BiCaption}[3][]{%
+  \caption{%
+    {\SongTiBold\zihao{5}#2\CaptionSource{#1}}\\
+    {\TimesNewRoman\bfseries\zihao{5}#3}%
+  }%
+}
+\defbibheading{custombib}[\refname]{%
+  \clearpage
+  \addcontentsline{toc}{section}{#1}%
+  \begin{center}
+    {\heiti\zihao{3}#1}
+  \end{center}
+  \vspace{12pt}
+}
+
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{2.3em}}
+\renewcommand*\l@subsection{\@dottedtocline{2}{1.5em}{3.2em}}
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{3.8em}{4.1em}}
+\makeatother
 
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
+
+\AtBeginEnvironment{figure}{\captionsetup{position=bottom,labelfont=songtibold,textfont=songtibold}}
+\AtBeginEnvironment{table}{\captionsetup{position=top,labelfont=songtibold,textfont=songtibold}}
+\AtBeginEnvironment{tabular}{\songti\TimesNewRoman\zihao{5}\renewcommand{\arraystretch}{1.35}}
+\AtBeginEnvironment{longtable}{\songti\TimesNewRoman\zihao{5}\renewcommand{\arraystretch}{1.35}}
 
 \ctexset{
   section = {
     name = {第,章},
     number = \chinese{section},
     format = \centering\heiti\zihao{3},
+    aftername = \hspace{1em},
     beforeskip = 24pt,
     afterskip = 12pt
   },
   subsection = {
     format = \heiti\zihao{4},
+    aftername = \hspace{1em},
     beforeskip = 24pt,
     afterskip = 12pt
   },
   subsubsection = {
     format = \heiti\zihao{-4},
+    aftername = \hspace{1em},
     beforeskip = 12pt,
     afterskip = 12pt
   }
@@ -49,53 +113,76 @@
 
 \begin{titlepage}
   \centering
-  \includegraphics[width=3.2cm]{figures/zjut.png}\par
+  \includegraphics[width=11.38cm]{figures/zjut.png}\par
   \vspace{0.6cm}
-  {\heiti\zihao{3}《文献检索与论文写作》\par}
+  {\centering\songti\zihao{1}《文献检索与论文写作》\par}
   \vspace{0.8cm}
-  {\heiti\zihao{3}课程报告\par}
+  {\centering\songti\zihao{1}课程报告\par}
   \vspace{2.2cm}
-  {\heiti\zihao{3}面向多视图几何重建的学习方法综述：\par}
+  {\centering\heiti\zihao{3}题目：面向多视图几何重建的学习方法综述\par}
   \vspace{0.2cm}
-  {\heiti\zihao{3}以 VGG 团队为例\par}
+  {\centering\heiti\zihao{3}——以 VGG 团队为例\par}
   \vspace{2.4cm}
-  \begin{flushleft}
-    {\songti\zihao{4}组\quad 长：\underline{\hspace{8.5cm}}\par}
+  \begin{center}
+    {\songti\zihao{-3}组\quad 长：\underline{\hspace{8.5cm}}\par}
     \vspace{0.6cm}
-    {\songti\zihao{4}组\quad 员：\underline{\hspace{8.5cm}}\par}
+    {\songti\zihao{-3}组\quad 员：\underline{\hspace{8.5cm}}\par}
     \vspace{0.6cm}
-    {\songti\zihao{4}专\quad 业：\underline{\hspace{8.5cm}}\par}
+    {\songti\zihao{-3}专\quad 业：\underline{\makebox[8.5cm][c]{计算机科学与技术}}\par}
     \vspace{0.6cm}
-    {\songti\zihao{4}班\quad 级：\underline{\hspace{8.5cm}}\par}
+    {\songti\zihao{-3}班\quad 级：\underline{\makebox[8.5cm][c]{2023计算机科学与技术03}}\par}
     \vspace{0.6cm}
-    {\songti\zihao{4}提交日期：\underline{\hspace{7.8cm}}\par}
-  \end{flushleft}
-  \vfill
+    {\songti\zihao{-3}提交日期：\underline{\makebox[7.8cm][c]{2026年5月}}\par}
+  \end{center}
+\vfill
 \end{titlepage}
 
 \clearpage
-\section*{摘要}
 \addcontentsline{toc}{section}{摘要}
+\begin{center}
+  {\heiti\zihao{3}摘要}
+\end{center}
+\begingroup
+\songti\zihao{-4}
+\setstretch{1.25}
+\parindent=2em
 本文围绕多视图几何重建中的学习方法展开综述，聚焦 Oxford Visual Geometry Group（VGG）团队近五年的代表工作，分析该方向如何从传统结构恢复管线逐步演化到端到端学习、可微结构恢复以及统一前馈式几何预测框架。全文首先梳理传统 SfM/MVS 的任务定义与关键瓶颈，再从几何先验注入、对应关系学习、可微优化和统一几何表示四个层面总结 VGG 团队的研究主线，并结合 CoTracker、VGGSfM、VGGT 等代表性成果讨论学习方法对多视图几何重建范式的推动作用。最后，本文从鲁棒性、效率、统一性与可扩展性等角度，对该研究体系的特点、局限与未来趋势进行综合评述。
 
-\par\noindent\textbf{关键词：}多视图几何重建，Structure-from-Motion，视觉几何，对应学习，VGG
+\par\noindent{\HeiTiBold\zihao{-4}关键词：}{\songti\zihao{-4}多视图几何重建，Structure-from-Motion，视觉几何，对应学习，VGG}
+\endgroup
 
 \clearpage
-\section*{ENGLISH DISSERTATION TITLE}
 \addcontentsline{toc}{section}{ABSTRACT}
 \begin{center}
-  {\bfseries\zihao{3} LEARNING METHODS FOR MULTI-VIEW GEOMETRIC RECONSTRUCTION: A REVIEW WITH THE VGG TEAM AS A CASE STUDY}
+  {\TimesNewRoman\zihao{3} LEARNING METHODS FOR MULTI-VIEW GEOMETRIC RECONSTRUCTION:}\\
+  \vspace{0.2cm}
+  {\TimesNewRoman\zihao{3} A REVIEW WITH THE VGG TEAM AS A CASE STUDY}
 \end{center}
 
-\section*{ABSTRACT}
+\begin{center}
+  {\TimesNewRoman\zihao{3} ABSTRACT}
+\end{center}
+\begingroup
+\TimesNewRoman\zihao{-4}
+\setstretch{1.25}
+\parindent=2em
 This report reviews recent learning-based methods for multi-view geometric reconstruction, with a focus on the Oxford Visual Geometry Group (VGG) and its representative works over the last five years. We first revisit the classical SfM/MVS pipeline and its limitations in correspondence estimation, global consistency, and optimization efficiency. We then organize the VGG research line into four connected themes: geometric priors, correspondence learning, differentiable structure from motion, and feed-forward geometric prediction. Representative works such as CoTracker, VGGSfM, and VGGT are discussed to show how learning-based methods have progressively redefined the traditional multi-view geometry pipeline. Finally, we summarize the main characteristics, current limitations, and future opportunities of this research line.
 
-\par\noindent\textbf{KEY WORDS:} multi-view geometry, structure from motion, visual geometry, correspondence learning, VGG
+\par\noindent{\TimesNewRoman\bfseries\zihao{-4}KEY WORDS: }{\TimesNewRoman\zihao{-4}multi-view geometry, structure from motion, visual geometry, correspondence learning, vgg}
+\endgroup
 
 \clearpage
+\begingroup
+\songti\TimesNewRoman\zihao{-4}
+\setstretch{1.25}
 \tableofcontents
+\endgroup
 
 \clearpage
+\songti\zihao{-4}
+\setstretch{1.25}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
 \input{sections/01_intro}
 \clearpage
 \input{sections/02_background}
@@ -109,6 +196,6 @@ This report reviews recent learning-based methods for multi-view geometric recon
 \input{sections/06_conclusion}
 
 \clearpage
-\printbibliography[title={参考文献}]
+\printbibliography[heading=custombib,title={参考文献}]
 
 \end{document}

@@ -22,10 +22,18 @@ VGGT 的意义不只在于预测速度更快，更在于它反映出多视图几
 
 此外，\textit{Splatter Image: Ultra-Fast Single-View 3D Reconstruction}、\textit{RealFusion} 和 \textit{PC$^2$} 虽然聚焦单图条件下的三维恢复或生成先验，但它们同样体现出 VGG 团队对“前馈式三维表示”的持续探索\cite{szymanowicz2024splatter,melaskyriazi2023realfusion,melaskyriazi2023pc2}。这说明 VGG 团队并非只在传统多视图任务上推进学习化，也在尝试寻找更统一、更高效的三维表示方式。只是从本文主题出发，这些工作更适合作为研究边界上的支线，用于说明 VGG 团队在几何表示和三维生成之间建立联系的努力，而不宜替代多视图几何主线本身。
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=11.4cm]{figures/vgg_pipeline.png}
+  \BiCaption{VGG 团队方法主线的层次演进}{Hierarchical Evolution of the VGG Research Line}
+  \label{fig:vgg-pipeline}
+\end{figure}
+
+图~\ref{fig:vgg-pipeline} 从方法结构而非时间顺序概括了 VGG 团队的研究推进逻辑。它揭示出一个比“模型越来越大”更重要的现象，即研究重心正从局部几何增强转向统一场景几何表示。也就是说，VGG 团队后续工作的关键价值，不只是把传统模块做得更准，而是逐渐把观测、求解和表示整合进同一个可迁移的几何建模框架中。
+
 \begin{table}[H]
 \centering
-\caption{VGG 团队多视图几何学习主线的阶段性对比}
-\small
+\BiCaption{VGG 团队多视图几何学习主线的阶段性对比}{Stage-wise Comparison of the VGG Research Line in Learning-based Multi-view Geometry}
 \begin{tabular}{>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{4.3cm}}
 \toprule
 阶段 & 代表工作 & 主要解决的问题 & 在主线中的作用 \\

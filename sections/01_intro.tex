@@ -29,3 +29,12 @@
 VGG 团队在该方向的工作具有三个适合作为综述案例的特征。第一，其研究主题高度集中，长期围绕几何先验、跨视角对应、SfM 系统学习化与统一几何表示展开。第二，其代表论文之间存在明显的递进关系，适合从“问题链条”而非“论文堆砌”角度组织综述。第三，其工作发表在 CVPR、ICCV、ECCV 等高水平会议，并普遍提供论文、项目页或代码，便于基于一级来源进行核实与写作\cite{bhalgat2023lighttouch,wang2024vggsfm,wang2025vggt}。
 
 更重要的是，VGG 团队的方法路径具有较强的代表性和可分析性。与某些仅在单一任务或单一模型上取得突破的研究不同，VGG 团队的工作覆盖了数据、表征、几何求解与统一预测等多个层面，因而能够较完整地反映当前多视图几何重建学习化的总体趋势。与此同时，这条研究主线又保持了足够清晰的边界，使本文可以围绕“多视图几何重建中的学习方法”这一明确主题展开，而不会滑向泛泛的“某团队视觉研究综述”。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=10.8cm]{figures/vgg_year_distribution.png}
+  \BiCaption{VGG 相关核心文献的年份分布}{Year-wise Distribution of Core VGG-related References}
+  \label{fig:vgg-year-distribution}
+\end{figure}
+
+从文献时间分布上看，如图~\ref{fig:vgg-year-distribution} 所示，VGG 团队与本文主题直接相关的核心工作主要集中在 2023--2025 年。这一现象说明该研究方向并非长期稳定的传统子领域，而是在近几年随着 Transformer、点轨迹学习和统一几何预测方法的发展而快速升温。换言之，本文所综述的并不是一个已经完全定型的成熟方向，而是一条仍在快速延展、且研究范式仍在变化中的新兴主线。
