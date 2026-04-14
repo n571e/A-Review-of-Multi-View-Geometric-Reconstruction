@@ -1,0 +1,26 @@
+# LaTeX intermediate/build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+*.nav
+*.snm
+*.vrb
+
+# LaTeX and tool logs
+*.log
+
+# Temporary/error artifacts
+*.bbl-SAVE-ERROR
+*.tmp
+*.temp
+_minted-*/

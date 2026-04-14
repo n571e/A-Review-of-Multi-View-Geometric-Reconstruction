@@ -155,6 +155,51 @@
   - OpenAccess: https://openaccess.thecvf.com/content/CVPR2024/html/Wang_DUSt3R_Geometric_3D_Vision_Made_Easy_CVPR_2024_paper.html
 - 作用：用于和 VGGSfM / VGGT 做横向比较，帮助定位“统一几何预测”范式。
 
+### 15. MASt3R: Grounding Image Matching in 3D with MASt3R
+
+- Bib key：`mast3r2024`
+- 官方来源：
+  - arXiv: https://arxiv.org/abs/2406.09756
+- 作用：用于补充 DUSt3R 之后“统一几何预测 + 匹配增强”这一类方法的发展脉络。
+
+### 16. NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis
+
+- Bib key：`mildenhall2020nerf`
+- 官方来源：
+  - arXiv: https://arxiv.org/abs/2003.08934
+- 作用：用于区分多视图几何重建与神经隐式渲染路线的研究目标差异。
+
+### 17. 3D Gaussian Splatting for Real-Time Radiance Field Rendering
+
+- Bib key：`kerbl2023gaussiansplatting`
+- 官方来源：
+  - arXiv: https://arxiv.org/abs/2308.04079
+- 作用：用于说明高效显式场景表示与几何重建主线之间的关系和差异。
+
+### 18. RealFusion: 360deg Reconstruction of Any Object From a Single Image
+
+- Bib key：`melaskyriazi2023realfusion`
+- 官方来源：
+  - OpenAccess: https://openaccess.thecvf.com/content/CVPR2023/html/Melas-Kyriazi_RealFusion_360deg_Reconstruction_of_Any_Object_From_a_Single_Image_CVPR_2023_paper.html
+- 作用：用于补充 VGG 团队在单图 3D 重建与生成先验方向上的探索。
+
+### 19. PC2: Projection-Conditioned Point Cloud Diffusion for Single-Image 3D Reconstruction
+
+- Bib key：`melaskyriazi2023pc2`
+- 官方来源：
+  - OpenAccess: https://openaccess.thecvf.com/content/CVPR2023/html/Melas-Kyriazi_PC2_Projection-Conditioned_Point_Cloud_Diffusion_for_Single-Image_3D_Reconstruction_CVPR_2023_paper.html
+- 作用：用于补充 VGG 团队在单图几何生成与点云表示方面的相关工作。
+
+### 20. SHIC: Shape-Image Correspondences with no Keypoint Supervision
+
+- Bib key：`shtedritski2024shic`
+- 年份/会议：ECCV 2024
+- 官方来源：
+  - VGG publication page: https://www.robots.ox.ac.uk/~vgg/publications/2024/Shtedritski24/
+- 研究问题：如何在没有关键点人工标注的情况下学习图像到模板形状的对应关系。
+- 核心方法：借助基础视觉模型与模板渲染，将形状对应学习转化为图像间对应学习问题。
+- 在主线中的作用：用于补充 VGG 团队在“对应关系学习”上的另一条相关支线，说明几何监督正从显式标注转向可迁移的弱监督或无监督信号。
+
 ## 写作提醒
 
 - 课程要求与模板要求并不完全一致。
