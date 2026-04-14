@@ -1,0 +1,23 @@
+\section{几何对应学习与表征增强}
+
+\subsection{几何先验如何进入 Transformer}
+
+在多视图几何重建中，对应关系始终是最基础的输入信号。VGG 团队在这一问题上的一个关键思路，是将几何规律提前编码到表征学习过程中，而不是仅在后端优化阶段使用几何约束。\textit{A Light Touch Approach to Teaching Transformers Multi-View Geometry} 正是这一思路的代表\cite{bhalgat2023lighttouch}。该工作并不直接求解完整三维结构，而是研究如何通过极线几何去约束 Transformer 的跨视角注意力分布，使其更容易学习合理的跨图像关系。
+
+这一思路的重要意义在于，它把几何从“解码时的硬约束”转化为“训练时的归纳偏置”。相比直接依赖大规模数据让模型自行发现几何结构，这种做法更符合多视图几何问题本身的物理规律，也为后续将 Transformer 用于更复杂的几何任务提供了方法启发\cite{wang2025vggt}。
+
+\subsection{从成对匹配到点轨迹建模}
+
+传统 SfM 更擅长处理成对匹配，再通过链接策略拼接成多视图轨迹。但在弱纹理、遮挡、长时序或视角变化较大时，这种做法容易引入链式误差。VGG 团队随后将研究重点推进到点轨迹学习，试图直接从视频或多帧图像中学习更稳定的时空对应表达。
+
+\textit{DynamicStereo: Consistent Dynamic Depth From Stereo Videos} 关注动态场景中的深度一致性问题，说明了仅靠逐帧估计往往难以获得时间稳定的几何结果，因此需要显式建模时间维度上的几何关系\cite{karaev2023dynamicstereo}。这一工作虽然面向动态深度估计，但其核心价值在于强调“对应关系并非静态成对关系，而是时空一致性问题”。
+
+在这一基础上，\textit{CoTracker: It is Better to Track Together} 进一步提出联合点追踪思想\cite{karaev2024cotracker}。与将每个点独立处理的追踪器不同，CoTracker 通过共享上下文、联合建模大量点轨迹，使模型能够更好地处理遮挡、出画与长时段追踪。对于多视图几何重建而言，这种轨迹形式具有重要意义，因为它提供了比传统稀疏匹配更稳定、更密集、更适合后续几何求解的观测基础。
+
+\subsection{CoTracker3 与真实视频监督}
+
+\textit{CoTracker3: Simpler and Better Point Tracking by Pseudo-Labelling Real Videos} 延续了轨迹建模思路，但重点转向如何更有效地利用真实视频数据\cite{karaev2025cotracker3}。该工作通过伪标签机制减少人工标注依赖，强化了模型在真实场景中的可迁移性与训练效率。对本文主题而言，其价值不只体现在追踪性能提升上，更在于说明高质量对应学习正在从“算法模块”变成“多视图几何系统的通用基础设施”。
+
+\subsection{本阶段工作的主线作用}
+
+从 Light Touch 到 CoTracker 系列，VGG 团队并未急于直接构建统一的三维重建模型，而是优先解决几何系统中最基础、最脆弱的输入问题：如何获得稳定可信的跨视角关系。这一阶段的研究成果为后续 VGGSfM 的全局相机恢复和可微优化提供了更强的底层观测，也解释了为何 VGG 团队的方法主线具有明显的递进性，而非彼此割裂的独立尝试。
