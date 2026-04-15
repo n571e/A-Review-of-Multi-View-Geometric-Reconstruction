@@ -119,9 +119,9 @@ def generate_timeline() -> None:
         ax.text(x, venue_y, paper["venue"], ha="center", va=va, fontsize=8.3, color="#444444")
 
     stage_bands = [
-        (2020.0, 2021.9, "阶段一：几何先验与数据基础"),
-        (2023.0, 2024.6, "阶段二：对应学习与系统重构"),
-        (2024.75, 2025.35, "阶段三：统一预测与动态扩展"),
+        (2020.0, 2021.9, "阶段一：几何先验与数据基座"),
+        (2023.0, 2024.1, "阶段二：轨迹化观测与特征增强"),
+        (2024.2, 2025.4, "阶段三：系统级可微与统一前馈"),
     ]
     band_colors = ["#E9C46A", "#90BE6D", "#F28482"]
     for (x0, x1, text), c in zip(stage_bands, band_colors):
@@ -262,16 +262,16 @@ def generate_pipeline() -> None:
 def generate_year_distribution() -> None:
     years = list(range(2020, 2026))
     category_groups = {
-        "基础与先验": {"先验/问题设定", "数据基础"},
-        "对应与轨迹": {"对应/轨迹"},
-        "系统重构": {"系统求解"},
-        "统一与扩展": {"统一表示", "动态/支线"},
+        "基础：先验/数据": {"先验/问题设定", "数据基础"},
+        "前端：对应/轨迹": {"对应/轨迹"},
+        "系统：求解/重构": {"系统求解"},
+        "统一：表示/扩展": {"统一表示", "动态/支线"},
     }
     stack_colors = {
-        "基础与先验": "#C97C5D",
-        "对应与轨迹": "#4D908E",
-        "系统重构": "#355070",
-        "统一与扩展": "#BC4749",
+        "基础：先验/数据": "#C97C5D",
+        "前端：对应/轨迹": "#4D908E",
+        "系统：求解/重构": "#355070",
+        "统一：表示/扩展": "#BC4749",
     }
     counts_by_group = {
         group: [
@@ -311,8 +311,8 @@ def generate_year_distribution() -> None:
     ax2.set_ylim(0, max(cumulative) + 2)
     ax2.spines["top"].set_visible(False)
 
-    ax.set_title("VGG 相关核心文献的年份分布", fontsize=14, fontweight="bold", pad=14)
-    ax.text(2021.85, max(counts) + 1.15, "堆叠柱表示研究重心，折线表示累计文献数量", fontsize=10.2)
+    ax.set_title("VGG 相关核心文献的年份演进与重心迁移", fontsize=14, fontweight="bold", pad=14)
+    ax.text(2021.85, max(counts) + 1.15, "图中堆叠反映正文三大阶段（前后端及统一表示），折线反映文献累计总数", fontsize=10.2)
     ax.legend(frameon=False, ncol=2, loc="upper left", fontsize=9.6)
     save(fig, "vgg_year_distribution.png")
 
@@ -362,11 +362,127 @@ def generate_focus_heatmap() -> None:
     save(fig, "vgg_focus_heatmap.png")
 
 
+def generate_obs_evolution() -> None:
+    fig, ax = plt.subplots(figsize=(10, 4.5))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 5)
+    ax.axis("off")
+    
+    # Left: Pairwise Matching
+    ax.text(2.5, 4.2, "传统多视图：离散成对匹配", ha="center", va="center", fontsize=13, fontweight="bold")
+    ax.add_patch(plt.Rectangle((0.8, 1.5), 1.2, 1.8, facecolor="#E0E0E0", edgecolor="#888", lw=1.5))
+    ax.add_patch(plt.Rectangle((3.0, 1.5), 1.2, 1.8, facecolor="#E0E0E0", edgecolor="#888", lw=1.5))
+    
+    pairs = [
+        ((1.6, 2.8), (3.4, 2.7), "#457B9D"),
+        ((1.4, 2.2), (3.2, 2.3), "#457B9D"),
+        ((1.8, 1.8), (3.6, 1.9), "#E63946")  # Error match
+    ]
+    for (x1, y1), (x2, y2), c in pairs:
+        ax.plot([x1, x2], [y1, y2], color=c, lw=1.5, marker="o", markersize=4, linestyle="--")
+        
+    ax.text(2.5, 0.8, "容易丢失上下文，形成局部错误匹配\n多图像之间需繁琐合并且容易断链", ha="center", va="center", fontsize=9.5, color="#555")
+
+    # Separator
+    ax.plot([5, 5], [0.5, 4.5], color="#CCC", lw=2, linestyle=":")
+
+    # Right: Point Trajectory
+    ax.text(7.5, 4.2, "学习式多视图：时空稠密轨迹", ha="center", va="center", fontsize=13, fontweight="bold")
+    import matplotlib.patches as patches
+    for i in range(4):
+        ax.add_patch(plt.Rectangle((5.8 + i*0.8, 1.5 + i*0.1), 0.9, 1.6, facecolor="#D4E6F1", edgecolor="#2980B9", lw=1.2, alpha=0.9))
+        
+    # Draw trajectories
+    x_coords = [6.25 + i*0.8 for i in range(4)]
+    y_coords1 = [2.6 + i*0.1, 2.65 + i*0.1, 2.5 + i*0.1, 2.4 + i*0.1]
+    y_coords2 = [2.0 + i*0.1, 2.1 + i*0.1, 2.25 + i*0.1, 2.15 + i*0.1]
+    ax.plot(x_coords, y_coords1, color="#E67E22", lw=2.5, marker="o", markersize=5)
+    ax.plot(x_coords, y_coords2, color="#27AE60", lw=2.5, marker="o", markersize=5)
+
+    ax.text(7.5, 0.8, "轨迹共享时序上下文，自然包含可见性\n有效应对短时遮挡、弱纹理和大幅运动", ha="center", va="center", fontsize=9.5, color="#555")
+
+    save(fig, "vgg_obs_evolution.png")
+
+
+def generate_vggsfm_concept() -> None:
+    fig, ax = plt.subplots(figsize=(11, 4.2))
+    ax.set_xlim(0, 11)
+    ax.set_ylim(-0.5, 4.5)
+    ax.axis("off")
+
+    stages = [
+        ("密集追踪特征\n(CoTracker)", "#A3CEF1", 1.2),
+        ("全局相机初始化\n(同步恢复避免增量)", "#6096BA", 4.2),
+        ("可微非线性优化\n(Differentiable BA)", "#274C77", 7.2),
+        ("全局一致三维结果\n(Poses & 3D Points)", "#8B8C89", 9.8)
+    ]
+
+    for i, (text, color, x) in enumerate(stages):
+        box = FancyBboxPatch(
+            (x - 1.2, 1.2), 2.4, 1.6,
+            boxstyle="round,pad=0.1,rounding_size=0.15",
+            facecolor=color, edgecolor="white", lw=2, alpha=0.95
+        )
+        ax.add_patch(box)
+        ax.text(x, 2.0, text, ha="center", va="center", fontsize=11, fontweight="bold", color="white")
+        
+        if i < len(stages) - 1:
+            ax.annotate("", xy=(stages[i+1][2] - 1.3, 2.0), xytext=(x + 1.2, 2.0),
+                        arrowprops=dict(arrowstyle="->,head_width=0.4,head_length=0.6", lw=2.5, color="#444"))
+
+    # Add gradient flow error
+    ax.annotate("", xy=(stages[0][2], 0.6), xytext=(stages[2][2], 0.6),
+                arrowprops=dict(connectionstyle="bar,fraction=-0.15", arrowstyle="->,head_width=0.4,head_length=0.6", lw=2, ls="--", color="#E63946"))
+    ax.text((stages[0][2] + stages[2][2])/2, 0.1, "重投影误差反向传播（系统级学习闭环）", ha="center", va="center", fontsize=10, color="#E63946", fontweight="bold")
+
+    save(fig, "vggsfm_concept.png")
+
+
+def generate_model_radar() -> None:
+    categories = ['多视点全局一致性', '统一表示化', '前馈端到端特性', '可微分框架耦合']
+    N = len(categories)
+
+    angles = [n / float(N) * 2 * np.pi for n in range(N)]
+    angles += angles[:1]
+
+    models = {
+        'DUSt3R': ([3, 3, 5, 2], '#3A86FF'),
+        'VGGSfM': ([5, 2, 2, 5], '#FF006E'),
+        'VGGT':   ([4, 5, 5, 4], '#8338EC')
+    }
+
+    fig = plt.figure(figsize=(7, 7))
+    ax = fig.add_subplot(111, polar=True)
+    
+    # Optional offsets handling depending on matplotlib version
+    ax.set_theta_offset(np.pi / 4)
+    ax.set_theta_direction(-1)
+
+    import matplotlib.font_manager as fm
+    plt.xticks(angles[:-1], categories, fontsize=12, fontweight="bold")
+    ax.set_rlabel_position(0)
+    plt.yticks([1, 2, 3, 4, 5], ["1", "2", "3", "4", "5"], color="grey", size=8)
+    plt.ylim(0, 5.5)
+
+    for name, (values, color) in models.items():
+        v = values + values[:1]
+        ax.plot(angles, v, linewidth=2, linestyle='solid', label=name, color=color)
+        ax.fill(angles, v, color=color, alpha=0.1)
+
+    plt.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1), fontsize=11, frameon=False)
+    plt.title("本主线与横向对比前馈模型能力雷达", size=14, fontweight="bold", y=1.05)
+    
+    save(fig, "model_comparison_radar.png")
+
+
 def main() -> None:
     generate_timeline()
     generate_pipeline()
     generate_year_distribution()
     generate_focus_heatmap()
+    generate_obs_evolution()
+    generate_vggsfm_concept()
+    generate_model_radar()
 
 
 if __name__ == "__main__":

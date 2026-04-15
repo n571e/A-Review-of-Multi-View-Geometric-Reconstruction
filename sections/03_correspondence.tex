@@ -16,7 +16,15 @@
 
 在这一基础上，\textit{CoTracker: It is Better to Track Together} 进一步提出联合点追踪思想\cite{karaev2024cotracker}。与将每个点独立处理的追踪器不同，CoTracker 通过共享上下文、联合建模大量点轨迹，使模型能够更好地处理遮挡、出画与长时段追踪。对于多视图几何重建而言，这种轨迹形式具有重要意义，因为它提供了比传统稀疏匹配更稳定、更密集、更适合后续几何求解的观测基础。
 
-这一变化实质上改变了多视图几何中“观测”的定义。经典 SfM 中的观测往往表现为若干离散关键点在不同图像中的局部对应，而 CoTracker 这类方法则把观测提升为具有时空连续性的轨迹片段。轨迹不仅编码了点在多帧中的位置变化，还隐含携带了可见性、局部运动一致性与上下文约束等信息。对于后续相机恢复和全局优化而言，这种观测显然比脆弱的成对匹配更适合支撑复杂场景下的学习化几何系统。
+如图~\ref{fig:vgg-obs-evolution} 所示，这一变化实质上改变了多视图几何中“观测”的定义。经典 SfM 中的观测往往表现为若干离散关键点在不同图像中的局部对应，而 CoTracker 这类方法则把观测提升为具有时空连续性的轨迹片段。轨迹不仅编码了点在多帧中的位置变化，还隐含携带了局部运动特征与上下文约束等信息，有效克服了传统稀疏匹配下容易断链和丢失下文的缺陷。对于后续相机恢复和全局优化而言，这种致密且具备时宽的观测显然比脆弱的成对匹配更适合支撑复杂场景下的学习化几何系统。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=12cm]{figures/vgg_obs_evolution.png}
+  \BiCaption{多视图几何前端观测范式的演进：从成对匹配到点轨迹}{Evolution of the Observation Paradigm in Multi-view Geometry: From Pairwise Matching to Point Trajectories}
+  \label{fig:vgg-obs-evolution}
+\end{figure}
+
 
 \subsection{CoTracker3 与真实视频监督}
 
